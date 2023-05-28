@@ -1,6 +1,6 @@
 class Sum{
-   public void add(int a, int b){
-    SYstem.out.println("Sum is= "+(a+b));
+   public void add(int x, int y){
+    System.out.println("Sum is= "+(x+y));
    }
 
    public static void main(String[] args){
