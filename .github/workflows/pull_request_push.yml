@@ -1,0 +1,24 @@
+name: Push action
+
+on: [ push ]
+
+jobs: 
+    pushed:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v2
+
+            - name: Set jfrog CLI
+              uses: jfrog/setup-jfrog-cli@v4
+              with:
+                version: latest
+
+            - name: Ping Jfrog
+              env: 
+                JF_URL: ${{ secrets.JFROG_URL }}
+                JF_USER: ${{ secrets.JFROG_USER }}
+                JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
+              run: |
+                jf rt ping

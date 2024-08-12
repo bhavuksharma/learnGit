@@ -15,13 +15,13 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Set up Jfrog CLI
-              uses: jfrog/setup-jfrog-cli@v1
+              uses: jfrog/setup-jfrog-cli@v4
               with:
-                version: 'latest'
+                version: latest
             
             - name: Configure Jfrog CLI
               run: |
-                jfrog rt config --url=$JFROG_URL --user=$JFROG_USER --access-token=$JFROG_TOKEN
+                jf rt config --url=$JFROG_URL --user=$JFROG_USER --access-token=$JFROG_TOKEN
               env:
                 JFROG_URL: ${{ secrets.JFROG_URL }}
                 JFORG_USER: ${{ secrets.JFROG_USER }}
