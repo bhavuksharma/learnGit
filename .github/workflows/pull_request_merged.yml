@@ -14,7 +14,29 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v2
 
-            - name: status
+            - name: Set up Jfrog CLI
+              uses: jfrog/setup-jfrog-cli@v1
+              with:
+                version: 'latest'
+            
+            - name: Configure Jfrog CLI
               run: |
-                echo "Merged pull request"
+                jfrog rt config --url=$JFROG_URL --user=$JFROG_USER --access-token=$JFROG_TOKEN
+              env:
+                JFROG_URL: ${{ secrets.JFROG_URL }}
+                JFORG_USER: ${{ secrets.JFROG_USER }}
+                JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
+
+            - name: Ping Jfrog server
+              run: |
+                if[[ jfrog rt ping ]]; then
+                  echo "Jfrog CLI is configured successfully"
+                else
+                  echo "Jfrog CLI configuration failed"
+                  exit 1
+                fi
+
+            - name: Upload artifacts to Jfrog
+              run: |
+                jfrog rt upload "bhavuksharma/learnGit/prcm prch-config-generic-local/prcm/"  "learnGit/prcm/*"
 
