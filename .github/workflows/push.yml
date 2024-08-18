@@ -15,7 +15,12 @@ jobs:
               env: 
                 JF_URL: ${{ vars.JF_URL }}
                 JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
+                JF_USER: ${{ secrets.JFROG_USER }}
 
-            - name: Ping Jfrog
+            # - name: Ping Jfrog
+            #   run: |
+            #     jf rt ping
+
+            - name: ping jfrog
               run: |
-                jf rt ping
+                curl -v -u$JF_USER:$JS_ACCESS_TOKEN  "https://hanumanbaan1.jfrog.io/artifactory/prch-config-repo-virtual/"
