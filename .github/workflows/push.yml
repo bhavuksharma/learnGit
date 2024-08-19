@@ -18,6 +18,7 @@ jobs:
             # - name: Ping Jfrog
             #   run: |
             #     jf rt ping
+            
 
             #ping jfrog
             - name: ping jfrog
