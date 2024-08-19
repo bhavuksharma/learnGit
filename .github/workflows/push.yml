@@ -26,6 +26,6 @@ jobs:
                 JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
                 JF_USER: ${{ secrets.JFROG_USER }}
               run: |
-                jf rt ping
+                jf rt ping --url $JF_URL --user $JF_USER 
                 # jf c add my-config --url $JF_URL --user $JF_USER --access-token $JF_ACCESS_TOKEN
                 # jf rt ping --server-id=my-config
