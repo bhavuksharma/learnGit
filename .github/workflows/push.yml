@@ -19,6 +19,7 @@ jobs:
             #   run: |
             #     jf rt ping
 
+            #ping jfrog
             - name: ping jfrog
               env: 
                 JF_URL: ${{ vars.JF_URL }}
