@@ -12,10 +12,8 @@ jobs:
 
             - name: Set jfrog CLI
               uses: jfrog/setup-jfrog-cli@v4
-              env: 
-                JF_URL: ${{ vars.JF_URL }}
-                JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
-                JF_USER: ${{ secrets.JFROG_USER }}
+              with:
+                version: 'latest'
 
             # - name: Ping Jfrog
             #   run: |
@@ -27,14 +25,5 @@ jobs:
                 JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
                 JF_USER: ${{ secrets.JFROG_USER }}
               run: |
-                curl -v -u$JF_USER:$JF_ACCESS_TOKEN  "https://hanumanbaan1.jfrog.io/artifactory/prch-config-repo-virtual/"
-
-            - name: upload artifacts to jfrog repo
-              env:
-                JF_URL: ${{ vars.JF_URL }}
-                JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
-                JF_USER: ${{ secrets.JFROG_USER }}
-              run: |
-                 for file in prcm/*; do
-                    curl -v -u$JF_USER:$JF_ACCESS_TOKEN -T "$file" "https://hanumanbaan1.jfrog.io/artifactory/prch-config-repo-virtual/prcm"
-                 done           
+                jfrog config add my-config --url $JF_URL --user $JF_USER --password $JF_ACCESS_TOKEN
+                jfrog rt ping
