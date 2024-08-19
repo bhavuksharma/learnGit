@@ -26,4 +26,4 @@ jobs:
                 JF_USER: ${{ secrets.JFROG_USER }}
               run: |
                 jf config add my-config --artifactory-url $JF_URL --user $JF_USER --access-token $JF_ACCESS_TOKEN
-                jf rt ping 
+                jf rt ping --server-id=my-config
