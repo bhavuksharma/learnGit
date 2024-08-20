@@ -1,20 +1,15 @@
-name: Pull Request Merged 
+name: Push 
 
-on:
-  pull_request: 
-      types: 
-          - closed 
-  push:
+on: [ push ]
 
 jobs: 
-    pr-merged:
-        if: github.event.pull_request.merged == true
+    pushed:
         runs-on: ubuntu-latest
+
         steps:
             - name: Checkout Repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v2
 
-          # step to setup jfrog cli
             - name: Set jfrog CLI
               uses: jfrog/setup-jfrog-cli@v4
               with:
@@ -24,12 +19,12 @@ jobs:
             #   run: |
             #     jf rt ping
 
-            #upload artifacts to jfrog repository
+
+            #ping jfrog
             - name: ping jfrog
               env: 
                 JF_URL: ${{ vars.JF_URL }}
                 JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
                 JF_USER: ${{ secrets.JFROG_USER }}
               run: |
-                jf rt ping --url $JF_URL --user $JF_USER --access-token $JF_ACCESS_TOKEN
                 jf rt u "prcm/*" "prch-config-generic-local/" --url $JF_URL --user $JF_USER --access-token $JF_ACCESS_TOKEN
