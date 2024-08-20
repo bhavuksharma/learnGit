@@ -18,7 +18,7 @@ jobs:
             # - name: Ping Jfrog
             #   run: |
             #     jf rt ping
-            
+
 
             #ping jfrog
             - name: ping jfrog
@@ -27,6 +27,7 @@ jobs:
                 JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
                 JF_USER: ${{ secrets.JFROG_USER }}
               run: |
-                jf rt ping --url $JF_URL --user $JF_USER --access-token $JF_ACCESS_TOKEN
+                jf c add my-config --url $JF_URL --user $JF_USER --access-token $JF_ACCESS_TOKEN
+                jf rt ping --server-id my-config
                 # jf c add my-config --url $JF_URL --user $JF_USER --access-token $JF_ACCESS_TOKEN
                 # jf rt ping --server-id=my-config
