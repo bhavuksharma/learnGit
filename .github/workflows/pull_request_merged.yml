@@ -1,9 +1,15 @@
-name: Push 
+name: pull request merged
 
-on: [ push ]
+on:
+  pull_request:
+    branches:
+      - master
+    types:
+      - closed
 
 jobs: 
     pushed:
+        if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
 
         steps:
