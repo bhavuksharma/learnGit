@@ -30,7 +30,7 @@ jobs:
               id: read_version
               run: |
                 version=$(cat version.txt)
-                echo "version=$version" >> $GITHUB_EVN
+                echo "version=$version" >> $GITHUB_ENV
 
             #ping jfrog
             - name: ping jfrog
