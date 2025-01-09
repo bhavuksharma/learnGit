@@ -42,5 +42,5 @@ jobs:
                 version=${{ env.version }}
                 jf c add --user $JF_USER --url $JF_URL --access-token $JF_ACCESS_TOKEN
                 jfrog c show
-                jf rt u "prcm/*" "prcm-config-local/PRCM/$version/" --flat=true --recursive=true
+                jf rt u "prcm/*" "test-spec-local/PRCM/$version/" --flat=true --recursive=true
                 # jf rt u "prcm/*" "prch-config-generic-local/" --url $JF_URL --user $JF_USER --access-token $JF_ACCESS_TOKEN 
