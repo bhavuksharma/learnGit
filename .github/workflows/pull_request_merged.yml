@@ -65,7 +65,7 @@ jobs:
                 version=${{ env.version }}
                 echo "version is $version"
                 # jf c add --user $JF_USER --url $JF_URL --access-token $JF_ACCESS_TOKEN
-                # jfrog c show
+                jfrog c show
                 jfrog rt u "prcm/*" "$JF_REPO/PRCM/$version/" --flat=true --recursive=true
                 # jf rt u "prcm/*" "test-spec-local/PRCM/$version/" --flat=true --recursive=true
                 # jf rt u "prcm/*" "prch-config-generic-local/" --url $JF_URL --user $JF_USER --access-token $JF_ACCESS_TOKEN 
