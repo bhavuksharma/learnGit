@@ -54,8 +54,7 @@ jobs:
               run: |
                 version=$(cat version.txt)
                 echo "version=$version" >> $GITHUB_ENV
-
-            #ping jfrog
+            
             - name: upload to jfrog
               # env: 
               #   JF_URL: ${{ vars.JF_URL }}
