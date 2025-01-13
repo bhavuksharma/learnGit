@@ -30,20 +30,21 @@ jobs:
                 JF_URL: ${{ vars.JF_URL }}
                 JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
                 JF_USER: ${{ secrets.JFROG_USER }}
-                JF_REPO: ${{ vars.JF_REPO }}
+                # JF_REPO: ${{ vars.JF_REPO }}
               run: |
                 jf c add --user $JF_USER --url $JF_URL --access-token $JF_ACCESS_TOKEN
-                jfrog c show
+                jf c show
 
             - name: Ping Jfrog server
               run: |
                 if jfrog rt ping; then
                    echo "Jfrog CLI is configured successfully"
                    echo "Your Jfrog congiurations are:"
-                   jfrog c show
+                   jf c show
                 else
                    echo "Failed to configure Jfrog CLI"
                    echo "please check your Jfrog CLI configuration"
+                   jf c show
                    exit 1
                 fi
 
@@ -60,12 +61,13 @@ jobs:
               #   JF_URL: ${{ vars.JF_URL }}
               #   JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
               #   JF_USER: ${{ secrets.JFROG_USER }}
-              #   JF_REPO: ${{ vars.JF_REPO }}
+                JF_REPO: ${{ vars.JF_REPO }}
               run: |
                 version=${{ env.version }}
                 echo "version is $version"
                 # jf c add --user $JF_USER --url $JF_URL --access-token $JF_ACCESS_TOKEN
-                jfrog c show
-                jfrog rt u "prcm/*" "$JF_REPO/PRCM/$version/" --flat=true --recursive=true
+                jf c show
+                jf rt u "prcm/*" "$JF_REPO/PRCM/$version/" --flat=true --recursive=true
+                # jfrog rt u "prcm/*" "$JF_REPO/PRCM/$version/" --flat=true --recursive=true
                 # jf rt u "prcm/*" "test-spec-local/PRCM/$version/" --flat=true --recursive=true
                 # jf rt u "prcm/*" "prch-config-generic-local/" --url $JF_URL --user $JF_USER --access-token $JF_ACCESS_TOKEN 
