@@ -1,0 +1,29 @@
+name: Branch Push 
+
+on:
+    push:
+       branches: [ ** ] 
+
+jobs:
+  pr-checks:
+     runs-on: ubuntu-latest
+
+     steps:
+     # Step to checkout the repository
+     - name: Checkout repository
+       uses: actions/checkout@v2
+
+    # Step to get the version from the feature branch
+    - name: Get version from feature branch
+      id: get-feature-version
+      run: |
+        feature_version=$(cat version.txt)
+
+        # Check if the version format is valid
+        if ! [[ $feature_version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          echo "Invalid version format in version.txt. Expected format: x.y.z"
+          echo "feature version is : $feature_version"
+          exit 1
+        fi
+        echo "feature_version=$feature_version" >> $GITHUB_OUTPUT
+        echo "feature version is $feature_version"
