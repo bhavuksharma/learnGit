@@ -6,7 +6,7 @@ on:
         - '**'
 
 jobs:
-  pr-checks:
+  branch-checks:
      runs-on: ubuntu-latest
 
      steps:
@@ -14,10 +14,10 @@ jobs:
      - name: Checkout repository
        uses: actions/checkout@v2
 
-    # Step to get the version from the feature branch
-    - name: Get version from feature branch
-      id: get-feature-version
-      run: |
+     # Step to get the version from the feature branch
+     - name: Get version from feature branch
+       id: get-feature-version
+       run: |
         feature_version=$(cat version.txt)
 
         # Check if the version format is valid
