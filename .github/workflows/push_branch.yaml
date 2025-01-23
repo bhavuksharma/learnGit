@@ -2,7 +2,8 @@ name: Branch Push
 
 on:
     push:
-       branches: [ ** ] 
+       branches:
+        - '**'
 
 jobs:
   pr-checks:
