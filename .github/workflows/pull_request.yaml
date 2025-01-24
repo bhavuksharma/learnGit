@@ -1,69 +1,57 @@
 name: Pull request
 
 on:
-    pull_request:
-       branches: [ main , master ]
-       types: [ opened, edited , reopened , synchronize , review_requested ]
-
+  pull_request:
+    branches: [main, master]
+    types: [opened, edited, reopened, synchronize, review_requested]
 jobs:
   branch-checks:
-     runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-     steps:
-     # Step to checkout the repository
-     - name: Checkout repository
-       uses: actions/checkout@v4
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-     # Step to get the version from the feature branch
-     - name: Get version from feature branch
-       id: get-feature-version
-       run: |
+    - name: Get version from feature branch
+      id: get-feature-version
+      run: |
         feature_version=$(cat version.txt)
-
-        # Check if the version format is valid
         if ! [[ $feature_version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
           echo "Invalid version format in version.txt. Expected format: x.y.z"
-          echo "feature version is : $feature_version"
+          echo "Feature version is: $feature_version"
           exit 1
         else
           echo "feature_version=$feature_version" >> $GITHUB_OUTPUT
-          echo "feature version is $feature_version"
+          echo "Feature version is $feature_version"
         fi
-    
-     # Step to checkout main branch
-     - name: Checkout main branch
-       run: |
-         git fetch origin master
-         git checkout main
 
-     # Step to get version from main branch
-     - name: Get version from main branch
-       id: get-main-version
-       run: |
+    - name: Checkout main branch
+      run: |
+        git fetch origin master
+        git checkout master
+
+    - name: Get version from main branch
+      id: get-main-version
+      run: |
         main_version=$(cat version.txt)
-        
-        # Check if the version format is valid 
         if ! [[ $main_version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-          echo "Invalid version format: $main_version, please use format  'x.y.z'"
+          echo "Invalid version format: $main_version, please use format 'x.y.z'"
           exit 1
         else
-          echo "main_version $main_version is valid"
-          echo "main_version = $main_version" >> $GITHUB_OUTPUT
+          echo "main_version=$main_version" >> $GITHUB_OUTPUT
+          echo "Main version $main_version is valid"
         fi
 
-      # Step to check feature version is greater than the main version
-      - name: Check if feature version is greater then main version 
-        id: check-version-greater
-        run: |
-          feature_version="${{ steps.get-feature-version.outputs.feature_version}}"
-          main_version="${{ steps.get-main-version.outputs.main_version}}"
-
-          # Compare the versions and exit if the feature version is not greater
-          if [[ "$(printf '%s\n' "$main_version" "$feature_version" | sort -V | head -n 1)" = "$feature_version" ]]; then
-            echo "Feature version is not greater than main version. Exiting."
-            echo "Increase feature version to be greater then main version."
-            echo "main_version is $main_version and feature_version is $feature_version."
-            exit 1
-          else
-            echo "Feature version $feature_version is greater than main version $main_version. Proceeding."
-          fi
+    - name: Check if feature version is greater than main version
+      id: check-version-greater
+      run: |
+        feature_version="${{ steps.get-feature-version.outputs.feature_version }}"
+        main_version="${{ steps.get-main-version.outputs.main_version }}"
+        if [[ "$(printf '%s\n' "$main_version" "$feature_version" | sort -V | head -n 1)" = "$feature_version" ]]; then
+          echo "Feature version is not greater than main version. Exiting."
+          echo "Increase feature version to be greater than main version."
+          echo "Main version is $main_version and feature version is $feature_version."
+          exit 1
+        else
+          echo "Feature version $feature_version is greater than main version $main_version. Proceeding."
+        fi
