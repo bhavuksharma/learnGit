@@ -48,9 +48,9 @@ jobs:
         feature_version="${{ steps.get-feature-version.outputs.feature_version }}"
         main_version="${{ steps.get-main-version.outputs.main_version }}"
         if [[ "$(printf '%s\n' "$main_version" "$feature_version" | sort -V | head -n 1)" = "$feature_version" ]]; then
-          echo "Feature version is not greater than main version. Exiting."
-          echo "Increase feature version to be greater than main version."
           echo "Main version is $main_version and feature version is $feature_version."
+          echo "Increase feature version to be greater than main version."
+          echo "Since feature version is not greater than main version. Exiting."
           exit 1
         else
           echo "Feature version $feature_version is greater than main version $main_version. Proceeding."
