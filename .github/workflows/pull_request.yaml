@@ -38,8 +38,8 @@ jobs:
 
      # Step to get version from main branch
      - name: Get version from main branch
-      id: get-main-version
-      run: |
+       id: get-main-version
+       run: |
         main_version=$(cat version.txt)
         
         # Check if the version format is valid 
